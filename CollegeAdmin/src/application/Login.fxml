@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginController">
+    <!-- Background Image -->
+    <ImageView fitWidth="1024" fitHeight="768" preserveRatio="false">
+        <image>
+            <Image url="@../resources/college_bg.jpg" />
+        </image>
+    </ImageView>
+    
+    <!-- Login Panel -->
+    <BorderPane prefWidth="400" prefHeight="550" maxWidth="400">
+        <center>
+            <VBox alignment="CENTER" styleClass="login-panel" spacing="15">
+                <padding>
+                    <Insets top="25" right="30" bottom="25" left="30" />
+                </padding>
+                
+                <!-- Logo -->
+                <ImageView fitHeight="60.0" fitWidth="280.0" preserveRatio="true">
+                    <image>
+                        <Image url="@../resources/symbiosis_logo.png" />
+                    </image>
+                </ImageView>
+                
+                <!-- Title -->
+                <Label text="College Administration System" styleClass="title-label">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                
+                <!-- Subtitle -->
+                <Label text="Sign in to access your portal" styleClass="subtitle-label" />
+                
+                <VBox spacing="10">
+                    <!-- Institute Selection -->
+                    <Label text="Select Institute" styleClass="form-label" />
+                    <ComboBox fx:id="instituteComboBox" promptText="Select your institute" 
+                              styleClass="combo-box" prefWidth="340" />
+                    
+                    <!-- User Type -->
+                    <Label text="User Type" styleClass="form-label" />
+                    <HBox spacing="15">
+                        <RadioButton fx:id="facultyRadio" text="Faculty" styleClass="user-type-radio" />
+                        <RadioButton fx:id="staffRadio" text="Staff" styleClass="user-type-radio" />
+                        <RadioButton fx:id="studentRadio" text="Student" styleClass="user-type-radio" selected="true" />
+                    </HBox>
+                    
+                    <!-- Username -->
+                    <Label text="Username" styleClass="form-label" />
+                    <TextField fx:id="usernameField" styleClass="text-input" promptText="Enter your username" />
+                    
+                    <!-- Password -->
+                    <Label text="Password" styleClass="form-label" />
+                    <PasswordField fx:id="passwordField" styleClass="text-input" promptText="Enter your password" />
+                    
+                    <!-- Forgot Password -->
+                    <HBox alignment="CENTER_RIGHT">
+                        <Hyperlink fx:id="forgotPasswordLink" text="Forgot Password?" onAction="#handleForgotPassword" styleClass="forgot-password-link" />
+                    </HBox>
+                    
+                    <!-- Remember Me -->
+                    <CheckBox fx:id="rememberMeCheckbox" text="Remember me" styleClass="remember-checkbox" />
+                    
+                    <!-- Sign In Button -->
+                    <Button fx:id="signInButton" text="Sign In" onAction="#handleSignIn" styleClass="sign-in-button" prefWidth="340" />
+                </VBox>
+                
+                <!-- Copyright -->
+                <Label text="© 2025 College Administration System. All rights reserved." styleClass="copyright-label">
+                    <VBox.margin>
+                        <Insets top="10" />
+                    </VBox.margin>
+                </Label>
+            </VBox>
+        </center>
+    </BorderPane>
+</StackPane>

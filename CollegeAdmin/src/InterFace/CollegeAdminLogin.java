@@ -13,9 +13,9 @@ import java.sql.SQLException;
 public class CollegeAdminLogin {
     // Database connection parameters
     private static final String DB_URL = "jdbc:mysql://localhost:3306/university_db";
-    private static final String DB_USER = "root";  // Change to your MySQL username
-    private static final String DB_PASSWORD = "Pratiksql@2004";  // Change to your MySQL password
-    
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "Pratiksql@2004";
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(CollegeAdminLogin::createAndShowGUI);
     }
@@ -26,17 +26,32 @@ public class CollegeAdminLogin {
         frame.setSize(1300, 700);
         frame.setLocationRelativeTo(null);
 
-        // Outer panel with GridBagLayout to center everything
-        JPanel outerPanel = new JPanel(new GridBagLayout());
-        outerPanel.setBackground(new Color(240, 248, 255)); // light blue
+        // Custom panel with background image
+        JPanel outerPanel = new JPanel(new GridBagLayout()) {
+            private Image backgroundImage = new ImageIcon(getClass().getResource("/resources/college_bg.jpg")).getImage();
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
 
         JPanel formPanel = new JPanel();
         formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
         formPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
         formPanel.setBackground(Color.WHITE);
 
+        // Logo
+        ImageIcon logoIcon = new ImageIcon(CollegeAdminLogin.class.getResource("/resources/symbiosis_logo.png"));
+        Image logoImg = logoIcon.getImage().getScaledInstance(100, 50, Image.SCALE_SMOOTH);
+        JLabel logoLabel = new JLabel(new ImageIcon(logoImg));
+        logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        formPanel.add(logoLabel);
+        formPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
         JLabel title = new JLabel("College Administration System");
-        title.setFont(new Font("Arial", Font.BOLD, 20));
+        title.setFont(new Font("Arial", Font.BOLD, 16));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel subtitle = new JLabel("Sign in to access your portal");
@@ -64,8 +79,8 @@ public class CollegeAdminLogin {
         JRadioButton studentBtn = new JRadioButton("Student");
         facultyBtn.setBackground(Color.WHITE);
         studentBtn.setBackground(Color.WHITE);
-        studentBtn.setSelected(true); // Default selection
-        
+        studentBtn.setSelected(true);
+
         ButtonGroup userTypeGroup = new ButtonGroup();
         userTypeGroup.add(facultyBtn);
         userTypeGroup.add(studentBtn);
@@ -96,7 +111,7 @@ public class CollegeAdminLogin {
         rememberPanel.add(remember, BorderLayout.WEST);
         rememberPanel.add(forgot, BorderLayout.EAST);
         rememberPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
-        
+
         // Status message
         JLabel statusLabel = new JLabel(" ");
         statusLabel.setForeground(Color.RED);
@@ -110,58 +125,54 @@ public class CollegeAdminLogin {
         signIn.setFont(new Font("Arial", Font.BOLD, 14));
         signIn.setAlignmentX(Component.CENTER_ALIGNMENT);
         signIn.setMaximumSize(new Dimension(200, 40));
-        
-        // Add action listener to sign-in button
+
         signIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String userID = username.getText().trim();
                 String pwd = new String(password.getPassword());
                 String userType = facultyBtn.isSelected() ? "Faculty" : "Student";
-                
+
                 if (userID.isEmpty() || pwd.isEmpty()) {
                     statusLabel.setText("Please enter both username and password");
                     return;
                 }
-                
+
                 boolean authenticated = authenticateUser(userID, pwd, userType);
-                
+
                 if (authenticated) {
                     statusLabel.setText("");
-                    // Store user info in Session
                     Session.setUser(userID, userType, pwd);
                     System.out.println("User logged in: " + userID + " (" + userType + ")");
-                    
-                    JOptionPane.showMessageDialog(frame, 
-                            "Login successful! Welcome to the College Administration System.", 
-                            "Authentication Successful", 
+
+                    JOptionPane.showMessageDialog(frame,
+                            "Login successful! Welcome to the College Administration System.",
+                            "Authentication Successful",
                             JOptionPane.INFORMATION_MESSAGE);
-                    
-                    // Close login frame
+
                     frame.dispose();
-                    
-                    // Launch appropriate dashboard based on user type
+
                     if (userType.equals("Student")) {
                         SwingUtilities.invokeLater(() -> {
                             try {
                                 new StudentDashboard().setVisible(true);
                             } catch (Exception ex) {
                                 ex.printStackTrace();
-                                JOptionPane.showMessageDialog(null, 
-                                        "Error launching student dashboard: " + ex.getMessage(), 
-                                        "Error", 
+                                JOptionPane.showMessageDialog(null,
+                                        "Error launching student dashboard: " + ex.getMessage(),
+                                        "Error",
                                         JOptionPane.ERROR_MESSAGE);
                             }
                         });
-                    } else {
+                    } else if (userType.equals("Faculty")) {
                         SwingUtilities.invokeLater(() -> {
                             try {
-                                new FacultyDashboard().setVisible(true);
+                                new FacultyDashBoard().setVisible(true);
                             } catch (Exception ex) {
                                 ex.printStackTrace();
-                                JOptionPane.showMessageDialog(null, 
-                                        "Error launching faculty dashboard: " + ex.getMessage(), 
-                                        "Error", 
+                                JOptionPane.showMessageDialog(null,
+                                        "Error launching faculty dashboard: " + ex.getMessage(),
+                                        "Error",
                                         JOptionPane.ERROR_MESSAGE);
                             }
                         });
@@ -171,23 +182,20 @@ public class CollegeAdminLogin {
                 }
             }
         });
-        
-        // Forgot password action
+
         forgot.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JOptionPane.showMessageDialog(frame, 
-                        "Please contact system administrator to reset your password.", 
-                        "Password Recovery", 
+                JOptionPane.showMessageDialog(frame,
+                        "Please contact system administrator to reset your password.",
+                        "Password Recovery",
                         JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
-        // Footer
-        JLabel footer = new JLabel("© 2024 College Administration System. All rights reserved.");
+        JLabel footer = new JLabel("\u00a9 2024 College Administration System. All rights reserved.");
         footer.setFont(new Font("Arial", Font.PLAIN, 10));
         footer.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Add everything to formPanel
         formPanel.add(instituteLabel);
         formPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         formPanel.add(instituteCombo);
@@ -208,41 +216,33 @@ public class CollegeAdminLogin {
         formPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         formPanel.add(footer);
 
-        // Add formPanel to center of outerPanel
         outerPanel.add(formPanel, new GridBagConstraints());
 
         frame.setContentPane(outerPanel);
         frame.setVisible(true);
     }
-    
-    /**
-     * Authenticates a user against the database
-     * @param userID the user ID (StudentID or FacultyID)
-     * @param password the user's password
-     * @param userType the type of user ("Student" or "Faculty")
-     * @return true if authentication is successful, false otherwise
-     */
+
     private static boolean authenticateUser(String userID, String password, String userType) {
         String tableName = userType.equals("Student") ? "student" : "faculty";
         String idColumn = userType.equals("Student") ? "StudentID" : "FacultyID";
-        
+
         String query = "SELECT * FROM " + tableName + " WHERE " + idColumn + " = ? AND Password = ?";
-        
+
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
-            
+
             pstmt.setString(1, userID);
             pstmt.setString(2, password);
-            
+
             try (ResultSet rs = pstmt.executeQuery()) {
-                return rs.next(); // If there's a record, authentication is successful
+                return rs.next();
             }
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, 
-                    "Database error: " + e.getMessage(), 
-                    "Database Error", 
+            JOptionPane.showMessageDialog(null,
+                    "Database error: " + e.getMessage(),
+                    "Database Error",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }

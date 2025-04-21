@@ -44,18 +44,19 @@ public class LoginController implements Initializable {
 
     // List of institutes to populate the combo box
     private ObservableList<String> institutes = FXCollections.observableArrayList(
-        "Symbiosis Institute of Technology (SIT)",
-        "Symbiosis Institute of Design (SID)",
-        "Symbiosis Law School (SLS)",
-        "Symbiosis Institute of Business Management (SIBM)",
-        "Symbiosis Medical College for Women (SMCW)"
+        "Computer Science and Engineering(CSE)",
+        "Artificial Intelligence and Machine learning(AIML)",
+        "Electronics and Telecommunications(ENTC)",
+        "Robotics And Automation(RNA)",
+        "Civil Engineering(CIVIL)",
+        "Mechanical Engineering(MECH)"
     );
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Set up institutes dropdown
         instituteComboBox.setItems(institutes);
-        instituteComboBox.setPromptText("Please select institute"); // Set the prompt text
+        instituteComboBox.setPromptText("Please select department"); // Set the prompt text
         instituteComboBox.setValue(null); // Ensure no initial selection
 
         // Set up toggle group for radio buttons
@@ -87,13 +88,12 @@ public class LoginController implements Initializable {
         // Get selected user type
         String userType = "";
         if (facultyRadio.isSelected()) userType = "Faculty";
-        else if (staffRadio.isSelected()) userType = "Staff";
         else if (studentRadio.isSelected()) userType = "Student";
 
         // Here you would normally authenticate against a database
         // For now, just print login details to console
         System.out.println("Login Attempt:");
-        System.out.println("Institute: " + instituteComboBox.getValue());
+        System.out.println("Department " + instituteComboBox.getValue());
         System.out.println("User Type: " + userType);
         System.out.println("Username: " + username);
         System.out.println("Remember Me: " + rememberMeCheckbox.isSelected());

@@ -1,0 +1,162 @@
+/* Root styling */
+.root {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Login panel styling */
+.login-panel {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);
+    -fx-padding: 20px;
+}
+
+/* Title and subtitle styling */
+.title-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.subtitle-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #666666;
+}
+
+/* Form labels */
+.form-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* Form input styling */
+.text-input {
+    -fx-background-color: white;
+    -fx-border-color: #d9d9d9;
+    -fx-border-radius: 3px;
+    -fx-padding: 8px;
+    -fx-font-size: 13px;
+}
+
+.text-input:focused {
+    -fx-border-color: #4285f4;
+}
+
+/* Combo box styling for Institute Selection */
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #d9d9d9;
+    -fx-border-radius: 3px;
+    -fx-padding: 0;
+    -fx-font-size: 13px;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.combo-box .arrow {
+    -fx-background-color: #666666;
+}
+
+.combo-box .list-cell {
+    -fx-padding: 8px;
+    -fx-background-color: white; /* Default background */
+    -fx-text-fill: black;
+}
+
+.combo-box .list-cell:filled:selected {
+    -fx-background-color: white; /* No blue background when closed */
+    -fx-text-fill: black; /* Keep text black for readability */
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: white;
+    -fx-border-color: #d9d9d9;
+}
+
+/* Style for the list items in the dropdown (default state) */
+.combo-box-popup .list-cell:filled {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+/* Style for the hovered item in the dropdown */
+.combo-box-popup .list-cell:filled:hover {
+    -fx-background-color: #f5f5f5; /* Light gray hover */
+    -fx-text-fill: black;
+}
+
+/* Style for the selected item when hovered in the dropdown */
+.combo-box-popup .list-cell:filled:selected:hover {
+    -fx-background-color: #f5f5f5; /* Light gray hover */
+    -fx-text-fill: black;
+}
+
+/* Remove blue background for selected item when the popup is showing */
+.combo-box-popup .list-cell:filled:showing:selected {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+/* Radio button styling */
+.user-type-radio .radio {
+    -fx-background-color: white;
+    -fx-border-color: #d9d9d9;
+    -fx-border-radius: 100%;
+}
+
+.user-type-radio:selected .radio .dot {
+    -fx-background-color: #4285f4;
+    -fx-padding: 4px;
+}
+
+/* Remember checkbox styling */
+.remember-checkbox .box {
+    -fx-background-color: white;
+    -fx-border-color: #d9d9d9;
+    -fx-border-radius: 3px;
+}
+
+.remember-checkbox:selected .mark {
+    -fx-background-color: #4285f4;
+}
+
+/* Sign in button styling */
+.sign-in-button {
+    -fx-background-color: #4285f4;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 3px;
+    -fx-padding: 10px;
+    -fx-cursor: hand;
+}
+
+.sign-in-button:hover {
+    -fx-background-color: #3367d6;
+}
+
+.sign-in-button:pressed {
+    -fx-background-color: #2a56c6;
+}
+
+/* Forgot password link */
+.forgot-password-link {
+    -fx-text-fill: #4285f4;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-font-size: 12px;
+}
+
+.forgot-password-link:hover {
+    -fx-text-fill: #3367d6;
+    -fx-underline: true;
+}
+
+/* Copyright label */
+.copyright-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: #999999;
+}
